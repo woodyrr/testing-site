@@ -1,7 +1,7 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onUnmounted } from 'vue'
 import db from'../firebase.js'
-import { collection, addDoc, getDocs } from "firebase/firestore"; 
+import { collection, addDoc, getDocs, orderBy, onSnapshot, doc, deleteDoc, query } from "firebase/firestore"; 
 
 const showModal = ref(false)
 const newNote = ref('')
@@ -28,6 +28,7 @@ const newlist = () => {
   });
 };
 
+
 onMounted(async() => {
     let recipeColection = await getDocs(collection(db, 'personal recipes'))
     recipeColection.forEach((recipe) => {
@@ -35,6 +36,27 @@ onMounted(async() => {
         console.log(recipe.data(), recipe.id)
     });
 })
+
+// let mounted = () =>{
+//     let recipeColection = query(collection(db, 'personal recipes'), orderBy('date'));
+//     const liveMessages = onSnapshot(recipeColection, (snapshot) => {
+//         recipes.value = snapshot.docs.map((doc) => {
+//             return {
+//                 id:doc.id,
+//                 ingredients:doc.data().ingredients,
+//                 name:doc.data().name,
+//                 created:doc.data().date_created
+            
+//             }
+//         })
+//     })
+//     onMounted(liveMessages)
+// }
+
+// mounted(){
+//     const latestQuery = query(collection(db, "messages"), orderBy('date'));
+//     onSnapshot(latestQuery, (snapshot)=>{})
+// }
 
 // const created = () => {
 //     try {

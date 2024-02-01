@@ -14,7 +14,26 @@ const register = () => {
         .then((data) => {
             console.log("successfully signed in!");
             console.log(auth.currentUser)
+            // if (acct != null) {
+            //     const personName = acct.getDisplayName();
+            //     const personFamilyName = acct.getFamilyName();
+            //     const personGivenName = acct.getGivenName();
+            //     const personEmail = acct.getEmail();
+            //     const personId = acct.getId();
+            //     const personPhoto = acct.getPhotoUrl();
+            // }
+            
             router.push('/home')
+            console.log(auth.currentUser.uid)
+            // getAuth()
+            // .getUser(auth.currentUser.uid)
+            // .then((userRecord) => {
+            //     // See the UserRecord reference doc for the contents of userRecord.
+            //     console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
+            // })
+            // .catch((error) => {
+            //     console.log('Error fetching user data:', error);
+            // });
         })
         .catch((error) => {
             console.log(error.code);
@@ -35,6 +54,15 @@ const register = () => {
             
         })
 };
+
+// if (acct != null) {
+//   String personName = acct.getDisplayName();
+//   String personGivenName = acct.getGivenName();
+//   String personFamilyName = acct.getFamilyName();
+//   String personEmail = acct.getEmail();
+//   String personId = acct.getId();
+//   Uri personPhoto = acct.getPhotoUrl();
+// }
 const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(getAuth(), provider)
