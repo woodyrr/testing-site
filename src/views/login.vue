@@ -13,7 +13,7 @@ const register = () => {
     signInWithEmailAndPassword(auth, email.value, password.value)
         .then((data) => {
             console.log("successfully signed in!");
-            console.log(auth.currentUser)
+            // console.log(auth.currentUser)
             // if (acct != null) {
             //     const personName = acct.getDisplayName();
             //     const personFamilyName = acct.getFamilyName();
@@ -24,7 +24,7 @@ const register = () => {
             // }
             
             router.push('/home')
-            console.log(auth.currentUser.uid)
+            // console.log(auth.currentUser.uid)
             // getAuth()
             // .getUser(auth.currentUser.uid)
             // .then((userRecord) => {
@@ -67,7 +67,7 @@ const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(getAuth(), provider)
     .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         router.push("/home")
     })
     .catch((error) => {
@@ -98,7 +98,6 @@ const signInWithGoogle = () => {
                     </div>
                     <div class="flex flex-col gap-2">
                         <label for="password" name="password" class="text-[18px]">Password</label>
-                        <!-- <div class="text-[14px]">Email</div> -->
                         <input v-model="password" type="text" placeholder="password"  id="password"  class="password border-2 border-[#4D5562] py-3 px-4 rounded-xl bg-transparent outline outline-none hover:border-[#652CD1]" required>
                     </div>
                 </div>

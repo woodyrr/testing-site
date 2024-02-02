@@ -3,85 +3,30 @@ import {ref, onMounted, onUnmounted} from 'vue'
 import db from'../firebase.js'
 import { collection, addDoc, getDocs, orderBy, onSnapshot, doc, deleteDoc, query} from "firebase/firestore"; 
 import create from '../components/createMeals.vue';
-import {getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from "firebase/auth"
-// const mesure = ref([]);
-// const num = ref(0);
-
-// const showModal = ref(false)
-
-// const addingRecipes = ref({})
-
-// const recipeName = ref('')
-// const recipeInstructions = ref('')
-// const recipeIngredients = ref('');
-
-// const addRecipe = () => {
-//     addingRecipes.value = {
-//         user_id: Math.floor(Math.random() * 1000000),
-//         recipe_name: recipeName.value,
-//         date: new Date(),
-//         Ingredients:recipeIngredients.value,
-//         instructions:recipeInstructions.value
-//     //   bg: getRandomColor(),
-//     }
-//     // showModal.value = false;
-//     // recipeName.value = ''
-//     // recipeIngredients.value = ''
-//     // recipeInstructions.value = ''
-//     console.log(addingRecipes)
-// }
-
-// const recipes = ref([])
-
-// const createRecipe = () => {
-//     return addDoc(collection(db, 'recipes'), {
-//         user_id: Math.floor(Math.random() * 1000000),
-//         name:recipeName.value,
-//         date_created:Date.now(),
-//         Ingredients:recipeIngredients.value,
-//         instructions:recipeInstructions.value
-//     })
-    
-// }
-
-
-
-
-
-
-    // mounted() {
-    // let recipeColection = query(collection(db, 'personal recipes'), orderBy('date'));
-    // const liveMessages = onSnapshot(recipeColection, (snapshot) => {
-    //     recipes.value = snapshot.docs.map((doc) => {
-    //         return {
-    //             id:doc.id,
-    //             ingredients:doc.data().ingredients,
-    //             name:doc.data().name,
-    //             created:doc.data().date_created
-            
-    //         }
-    //     })
-    // })
-    // onMounted(liveMessages)
-    // }
-
-
-
+import {getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile, onAuthStateChanged} from "firebase/auth";
+// import currentUser from '../components/user.vue'
 const showModal = ref(false)
-
-// onMounted(async() => {
-//     let recipeColection = await getDocs(collection(db, 'recipes'))
-//     recipeColection.forEach((recipe) => {
-//         recipes.value.push({...recipe.data(), id: recipe.id})
-//         console.log(recipe.data(), recipe.id)
-//     });
-// })
-
 
 </script>
 
 <script>
-
+let usersName = []
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    // console.log(user)
+    let names  = user.displayName
+    usersName.value = names
+    return usersName
+    // console.log()
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
 
 export default {
     name:'app',
@@ -93,7 +38,9 @@ export default {
             name:this.$refs.recipeName.value,
             date_created:new Date(Date.now()).toLocaleString(),
             Ingredients:this.$refs.recipeIngredients.value,
-            instructions:this.$refs.recipeInstructions.value
+            instructions:this.$refs.recipeInstructions.value,
+            username:usersName.value,
+            // bg:this.getRandomColor()
             });
         },
         // Date.now()
@@ -102,8 +49,12 @@ export default {
             this.$refs.recipeIngredients.value = ''
             this.$refs.recipeInstructions.value = ''
             alert("recipe created")
+        },
+        getRandomColor: function (){
+            return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
         }
     },
+
     data:()=>{
         return {
             recipes:ref([])
@@ -119,14 +70,16 @@ export default {
                 ingredients:doc.data().ingredients,
                 instructions:doc.data().instructions,
                 name:doc.data().name,
-                created:doc.data().date_created
+                created:doc.data().date_created,
+                user:doc.data().username,
+                // bg:doc.data().bg
             
             }
         })
     })
     onMounted(liveMessages)
     }
-
+// check if photo url is possible
 }
 </script>
 <template>
@@ -136,6 +89,9 @@ export default {
                 <img src="../assets/Expand_left.svg" alt="" srcset="">
                 <div>Back to categories</div>
             </router-link>
+            <!-- <div>
+                <current-user />
+            </div> -->
             <button class="flex gap-2 bg-yellow-400 rounded-2xl items-center p-3 md:p-4 md:px-6" @click="showModal = true">
                 <i class="fa-regular fa-square-plus "></i>
                 <div class="font-semibold">New Recipe</div>
@@ -144,7 +100,7 @@ export default {
         <div id="dashboard" class="text-[24px] font-bold text-white text-center">
             <h3>Community Recipe Dashboard</h3>
         </div>
-        <section class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 text-[16px] text-[#E5E7EB] font-medium px-[2%] lg:px-[6%]">
+        <section class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 text-[16px] text-[#E5E7EB] font-medium px-[2%] lg:px-[6%]">
             <!-- <div  v-for="item in recipes" class="relative" :key="item.id">
                 <router-link :to="/meals/ + item.idMeal"  class=" bg-[#394150] p-3 w-full rounded-xl flex flex-col">
                     <img src="" alt="meal-thumbnail" srcset="" class="  rounded-xl pb-2 w-full h-[200px] md:w-[800px]" id="your-img">
@@ -155,11 +111,21 @@ export default {
                 <router-link :to="/meals/ + item.idMeal"  class=" bg-[#394150] p-3 w-full rounded-xl flex flex-col">
                     
                     <img v-if="item.img" :src="item.img" alt="meal-thumbnail" srcset="" class="  rounded-xl pb-2 w-full h-[200px] md:w-[800px]" id="your-img">
-                    <i v-else class="fa-solid fa-bowl-food text-[100px] sm:[150px] md:text-[170px] lg:text-[200px] flex justify-center items-center text-yellow-200"></i>
-                    <div>{{ item.name }}</div>
-                    <div>
-                        {{ item.created }}
-                    </div>
+                    <i v-else class="fa-solid fa-bowl-food text-[100px] sm:[120px] md:text-[125px] lg:text-[150px] flex justify-center items-center "></i>
+                    <section class="flex justify-between text-white">
+                        <div class="flex flex-col">
+                            <div class="font-bold text-xl text-yellow-400">
+                                {{ item.name }}
+                            </div>
+                            <div class="text-sm font-semibold">
+                                {{ item.created }}
+                            </div>
+                        </div>
+                        <div class="px-3 bg-[#4E80EE] flex items-center rounded-lg font-bold" >
+                            {{ item.user }}
+                        </div>
+                    </section>
+                    <!-- :style="{backgroundColor: item.bg}" -->
                 </router-link>
             </div>
         </section>
