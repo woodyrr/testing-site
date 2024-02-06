@@ -7,6 +7,7 @@ import loggedin from '../views/login.vue'
 import sign from '../views/signup.vue'
 import dashboard from '../views/dashboard.vue'
 import currentUser from '../views/user.vue'
+import dashDetails from '../views/dashdetails.vue'
 
 import {getAuth, onAuthStateChanged} from "firebase/auth"
 
@@ -51,6 +52,11 @@ const router = createRouter({
       path: '/dashboard',
       name:'Dashboard',
       component:dashboard
+    },
+    {
+      path: '/dashmeals/:id',
+      name:'Dashboard meals details',
+      component:dashDetails
     },
     {
       path: '/user',

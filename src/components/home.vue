@@ -6,7 +6,7 @@ import {getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup
 import mainhead from './header.vue'
 import temprecipes from './baserecipes.vue'
 import categories from './categories.vue'
-import login from "../views/login.vue"
+import recent from './recent.vue'
 // import router from '@/router';
 const isLoggedIn = ref(false)
 const router = useRouter()
@@ -46,7 +46,7 @@ const handle_search = () => {
 }
 
 const overlay = ref(false)
-
+const overlay2 = ref(true)
 </script>
 <template>
     
@@ -56,7 +56,7 @@ const overlay = ref(false)
             <div class="flex flex-col  sm:w-full lg:w-[35%] gap-3 sm:gap-6">
               <!-- test start -->
               <div class="flex w-full justify-between gap-1 sm:gap-4 md:gap-6 " >
-                  <button @click="overlay = !overlay " class="text-white bg-purple-500 p-3 rounded-2xl flex items-center justify-center gap-1 w-full" name="Categories">
+                  <button @click="overlay = true,  overlay2 = false" class="text-white bg-purple-500 p-3 rounded-2xl flex items-center justify-center gap-1 w-full" name="Categories">
                     <i class="fa-solid fa-layer-group"></i>
                     <div class="font-semibold">categories</div>
                   </button>
@@ -68,7 +68,7 @@ const overlay = ref(false)
                         <i class="fa-solid fa-right-from-bracket text-base"></i>
                         <div class="text-base font-semibold">Logout</div>
                   </button>
-                  <button class="bg-[#394150] px-3 rounded-xl hidden lg:flex gap-2 justify-center items-center w-full text-white">
+                  <button @click="overlay2 = true,  overlay = false " class="bg-[#394150] px-3 rounded-xl hidden lg:flex gap-2 justify-center items-center w-full text-white">
                         <i class="fa-solid fa-message "></i>
                         <div class="text-base font-semibold">Recent</div>
                   </button>
@@ -87,6 +87,12 @@ const overlay = ref(false)
                 <Suspense v-if="overlay">
                 <template #default>
                     <categories /> 
+                </template>
+                </Suspense>
+
+                <Suspense v-if="overlay2" >
+                <template #default>
+                    <recent/> 
                 </template>
                 </Suspense>
             </div>

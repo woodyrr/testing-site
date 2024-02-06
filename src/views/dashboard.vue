@@ -77,6 +77,7 @@ export default {
             }
         })
     })
+    
     onMounted(liveMessages)
     }
 // check if photo url is possible
@@ -108,7 +109,7 @@ export default {
                 </router-link>
             </div> -->
             <div  v-for="item in recipes" class="relative" :key="item.id">
-                <router-link :to="/meals/ + item.idMeal"  class=" bg-[#394150] p-3 w-full rounded-xl flex flex-col">
+                <router-link :to="/dashmeals/ + item.id"  class=" bg-[#394150] p-3 w-full rounded-xl flex flex-col">
                     
                     <img v-if="item.img" :src="item.img" alt="meal-thumbnail" srcset="" class="  rounded-xl pb-2 w-full h-[200px] md:w-[800px]" id="your-img">
                     <i v-else class="fa-solid fa-bowl-food text-[100px] sm:[120px] md:text-[125px] lg:text-[150px] flex justify-center items-center "></i>
