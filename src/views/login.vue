@@ -74,6 +74,18 @@ const signInWithGoogle = () => {
 
     })
 };
+
+let guestEmail = 'testdemo@gmail.com'
+let guestPassword = 'Welcome1'
+
+let copy1 =  () =>{
+    navigator.clipboard.writeText(guestEmail);
+    alert('Email copied to clipboard');
+}
+let copy2 =  () =>{
+    navigator.clipboard.writeText(guestPassword);
+    alert('password copied to clipboard');
+}
 </script>
 
 <template>
@@ -90,7 +102,6 @@ const signInWithGoogle = () => {
                         </div>
                     </div>
                     
-                    
                     <div class="flex flex-col gap-2 text-[#E5E7EB]">
                         <label for="Email" name="Email" class="text-[18px]">Email</label>
                         <!-- <div class="text-[14px]">Name</div> -->
@@ -102,6 +113,24 @@ const signInWithGoogle = () => {
                     </div>
                 </div>
                 <p v-if="errorMsg">{{ errorMsg }}</p>
+                <section class="guest flex gap-4 px-[15px]">
+                    <h2 class="text-yellow-400 font-bold text-lg">Guest:</h2>
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-2 text-[#fffefe]">
+                            <div>Email</div>
+                            <button @click="copy1">
+                                <img src="../assets/link.svg" class=" h-5 lg:h-6">
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2 text-[#fffefe]">
+                            <div>password</div>
+                            <button @click="copy2" >
+                                <img src="../assets/link.svg" class=" h-5 lg:h-6 ">
+                            </button>
+                        </div>
+                    </div>
+                    
+                </section>
                 <div class=" w-full flex flex-col items-center justify-center text-white gap-3">
                     <button @click="register" type="submit" class="btn1 bg-gradient-to-l from-[#845EEE] to-[#652CD1] rounded-full px-[10%] py-2" >Submit</button>
                     <div>or</div>

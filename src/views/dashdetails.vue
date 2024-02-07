@@ -128,7 +128,7 @@ const route = useRoute();
                         </div>
                     </div>
 
-                    <div class="Instructions flex flex-col gap-5 px-2 md:px-0 pb-14">
+                    <div class="Instructions flex flex-col gap-5 px-2 md:px-0">
                         <div class="flex gap-4">
                             <button class="bg-[#4E80EE] p-3 py-5 rounded-full"></button>
                             <h3 class="font-bold flex items-center text-[18px]">Instructions</h3>

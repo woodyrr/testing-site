@@ -26,6 +26,8 @@ onMounted(() => {
         }
     })
 })
+
+
 </script>
 
 <script>
@@ -126,13 +128,10 @@ export default {
         <div id="dashboard" class="text-[24px] font-bold text-white text-center">
             <h3>Community Recipe Dashboard</h3>
         </div>
-            
-       
-        
+
         <section class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 text-[16px] text-[#E5E7EB] font-medium px-[2%] lg:px-[6%]">
             <div  v-for="item in recipes" class="relative" :key="item.id">
                 <router-link :to="/dashmeals/ + item.id"  class=" bg-[#394150] p-3 w-full rounded-xl flex flex-col">
-                    
                     <img v-if="item.img" :src="item.img" alt="meal-thumbnail" srcset="" class="  rounded-xl pb-2 w-full h-[200px] md:w-[800px]" id="your-img">
                     <i v-else class="fa-solid fa-bowl-food text-[100px] sm:[120px] md:text-[125px] lg:text-[150px] flex justify-center items-center "></i>
                     <section class="flex justify-between text-white">
@@ -148,13 +147,13 @@ export default {
                             {{ item.user }}
                         </div>
                     </section>
-                    <!-- :style="{backgroundColor: item.bg}" -->
                 </router-link>
             </div>
         </section>
+
         <!-- 52827 -->
+
         <div v-if="showModal" class="overlay  absolute w-full h-full bg-[#394150]  z-10 flex items-center justify-center sm:px-[10%] lg:px-[20%] 2xl:px-[25%]" id="recipes">
-            
             <div class="modal w-full bg-[#0E1325] rounded-xl p-[35px] relative flex flex-col gap-4 ">
                 <div class="text-gray-100 flex justify-end text-xs">*Recommended that users complete all fields*</div>
                 <input ref="recipeName" type="text" name="Name" placeholder="Enter recipe name" class=" p-3 rounded-lg ">
@@ -164,11 +163,12 @@ export default {
                     <div class="text-white">Upload image</div>
                     <input class="text-white cursor-pointer" type="file" accept="image/jpeg" @change=uploadImage>
                 </div> -->
-                
-                <button class="p-[10px 20px] text-[20px] w-full bg-green-100  border-none text-black cursor-pointer p-2 font-semibold" @click="createRecipe(),showModal = false, bro()">Create Recipe</button>
+                <button class="p-[10px 20px] text-[20px] w-full bg-green-100  border-none text-black cursor-pointer p-2 font-semibold" @click="createRecipe(),showModal = false, bro(), toasts = true">Create Recipe</button>
                 <button class=" text-white font-semibold text-[18px]" @click="showModal = false">Cancel</button>
             </div>
         </div>
     </section>
+
+    
     
 </template>
