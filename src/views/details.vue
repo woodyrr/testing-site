@@ -21,7 +21,7 @@ const filteredIngredients = computed(() => {
 onBeforeMount(async () => {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${route.params.id}`);
     const data = await response.json();
-    console.log(data)
+    // console.log(data)
     food.value = data;
     
 });

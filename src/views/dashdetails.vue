@@ -50,11 +50,9 @@ const route = useRoute();
         // console.log(user)
         let names  = user.displayName
         usersName.value = names
-        console.log(user)
+        // console.log(user)
         return usersName
-        
-        // console.log()
-        // ...
+
     } else {
         // User is signed out
         // ...
@@ -64,29 +62,7 @@ const route = useRoute();
     export default {
         name:'app',
         components:{},
-        methods: {
-            // createRecipe: function() {
-            //     addDoc(collection(db, 'recipees'), {
-            //     recipe_id: Math.floor(Math.random() * 1000000),
-            //     name:this.$refs.recipeName.value,
-            //     date_created:new Date(Date.now()).toLocaleString(),
-            //     Ingredients:this.$refs.recipeIngredients.value,
-            //     instructions:this.$refs.recipeInstructions.value,
-            //     username:usersName.value,
-            //     // bg:this.getRandomColor()
-            //     });
-            // },
-            // // Date.now()
-            // bro: function(){
-            //     this.$refs.recipeName.value = ''
-            //     this.$refs.recipeIngredients.value = ''
-            //     this.$refs.recipeInstructions.value = ''
-            //     alert("recipe created")
-            // },
-            // getRandomColor: function (){
-            //     return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
-            // }
-        },
+        methods: {},
 
         data:()=>{
             return {
@@ -96,7 +72,6 @@ const route = useRoute();
 
         mounted() {
         const recipeColection = query(collection(db, 'recipees'));
-        const route = useRoute();
         // console.log(liveMessages)
         const liveMessages = onSnapshot(recipeColection, (snapshot) => {
             this.recipes = snapshot.docs.map((doc) => {
@@ -111,7 +86,6 @@ const route = useRoute();
                 } 
             })
         })
-        // console.log(recipeColection)
         onMounted(liveMessages)
         }
         
@@ -120,14 +94,6 @@ const route = useRoute();
 
     
 </script>
-<!-- <template>
-    <div v-for="item in recipes" class="text-white">
-        <div v-if="item.id == route.params.id">
-            {{ item.name }}
-        </div>
-        
-    </div>
-</template> -->
 
 <template>
     <main class=" w-full  text-[#E5E7EB] px-[2%] sm:px-[5%] md:px-[6%] 2xl:px-[8%] py-10">
@@ -147,11 +113,11 @@ const route = useRoute();
                         <div class="flex flex-col gap-4">
                             <h2 class="text-[30px] lg:text-[45px] detailhead">{{ item.name }}</h2>
                         </div>
-                        <div class="flex justify-center items-center px-3 md:px-5 rounded-full bg-green-300 text-black  font-extrabold">
+                        <div class="flex justify-center items-center px-3 md:px-5 rounded-full bg-blue-300  text-black  font-extrabold">
                             {{ item.user }}
                         </div>
                     </div>
-                    
+                    <!-- bg-[#4E80EE] -->
                     <div class="ingredients flex flex-col gap-5 px-2 md:px-0">
                         <div class="flex gap-4">
                             <button class="bg-[#FEBD2E] p-3 py-5 rounded-full"></button>
@@ -188,9 +154,6 @@ const route = useRoute();
                         
                     </div>
                 </div>
-                
-                
-                
             </div>
             
         </section>
@@ -206,8 +169,5 @@ img{
 .detailhead{
   font-family: 'Playfair Display', serif;
 }
-/* .instruct{
-    white-space: pre;
-} */
 
 </style>

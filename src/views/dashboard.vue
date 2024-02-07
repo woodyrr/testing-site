@@ -7,6 +7,25 @@ import {getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithP
 // import currentUser from '../components/user.vue'
 const showModal = ref(false)
 
+onMounted(() => {
+    
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/auth.user
+            // console.log(user)
+            let names  = user.displayName
+            usersName.value = names
+            // console.log(usersName)
+            return usersName
+            
+            // ...
+        } else {
+            // User is signed out
+            // ...
+        }
+    })
+})
 </script>
 
 <script>
@@ -19,8 +38,9 @@ onAuthStateChanged(auth, (user) => {
     // console.log(user)
     let names  = user.displayName
     usersName.value = names
+    // console.log(usersName)
     return usersName
-    // console.log()
+    
     // ...
   } else {
     // User is signed out
@@ -28,6 +48,10 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+
+
+
+// console.log(usersName)
 export default {
     name:'app',
     components:{},
@@ -62,7 +86,7 @@ export default {
     },
 
     mounted() {
-    const recipeColection = query(collection(db, 'recipees'));
+    const recipeColection = query(collection(db, 'recipees'), orderBy("name", "desc"));
     const liveMessages = onSnapshot(recipeColection, (snapshot) => {
         this.recipes = snapshot.docs.map((doc) => {
             return {
@@ -90,24 +114,22 @@ export default {
                 <img src="../assets/Expand_left.svg" alt="" srcset="">
                 <div>Back to categories</div>
             </router-link>
-            <!-- <div>
-                <current-user />
-            </div> -->
+            <div class="bg-green-300 flex items-center px-2 rounded-full font-extrabold text-[9px] lg:text-[16px]">
+                {{ usersName.value }}
+            </div>
             <button class="flex gap-2 bg-yellow-400 rounded-2xl items-center p-3 md:p-4 md:px-6" @click="showModal = true">
                 <i class="fa-regular fa-square-plus "></i>
                 <div class="font-semibold">New Recipe</div>
             </button>
         </header>
+        
         <div id="dashboard" class="text-[24px] font-bold text-white text-center">
             <h3>Community Recipe Dashboard</h3>
         </div>
+            
+       
+        
         <section class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 text-[16px] text-[#E5E7EB] font-medium px-[2%] lg:px-[6%]">
-            <!-- <div  v-for="item in recipes" class="relative" :key="item.id">
-                <router-link :to="/meals/ + item.idMeal"  class=" bg-[#394150] p-3 w-full rounded-xl flex flex-col">
-                    <img src="" alt="meal-thumbnail" srcset="" class="  rounded-xl pb-2 w-full h-[200px] md:w-[800px]" id="your-img">
-                    <div>{{ item.recipe_name }}</div>
-                </router-link>
-            </div> -->
             <div  v-for="item in recipes" class="relative" :key="item.id">
                 <router-link :to="/dashmeals/ + item.id"  class=" bg-[#394150] p-3 w-full rounded-xl flex flex-col">
                     
@@ -122,7 +144,7 @@ export default {
                                 {{ item.created }}
                             </div>
                         </div>
-                        <div class="px-3 bg-[#4E80EE] flex items-center rounded-lg font-bold" >
+                        <div class="px-3 bg-gray-400 flex items-center rounded-lg font-bold" >
                             {{ item.user }}
                         </div>
                     </section>
@@ -147,34 +169,6 @@ export default {
                 <button class=" text-white font-semibold text-[18px]" @click="showModal = false">Cancel</button>
             </div>
         </div>
-        <!-- v-model="recipeIngredients" -->
-        <!-- , showModal = false, bro() -->
-        <!-- , createRecipe() -->
-        
-        
-        
-        <!-- <div class="max-w-[1000px] p-[10px] mt-0 mx-auto">
-            <div class="mt-6 flex flex-wrap" >
-                <div v-for="note in notes"
-                    :key="note.id" class="w-[225px] h-[225px] p-[10px] rounded-2xl bg-gray-200 flex flex-col justify-between mr-[20px] mb-[20px] text-black" :style="{backgroundColor: note.bg}">
-                    <p class="main-text">{{ note.text }}</p>
-                    <p class="date text-sm font-bold">{{ note.date.toLocaleDateString("en-US") }}</p>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <section class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 text-[16px] text-[#E5E7EB] font-medium px-[2%] lg:px-[6%]">
-            <div  v-for="item in recipes" class="relative" :key="item.id">
-                <router-link :to="/meals/ + item.idMeal"  class=" bg-[#394150] p-3 w-full rounded-xl flex flex-col">
-                    <img src="" alt="meal-thumbnail" srcset="" class="  rounded-xl pb-2 w-full h-[200px] sm:w-[800px]" id="your-img">
-                    <div>{{ item.recipe_name }}</div>
-                </router-link>
-            </div>
-            
-        </section> -->
-
-
     </section>
     
 </template>
-<!-- ../firebaseInit -->

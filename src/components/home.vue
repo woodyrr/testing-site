@@ -11,11 +11,18 @@ import recent from './recent.vue'
 const isLoggedIn = ref(false)
 const router = useRouter()
 const auth = getAuth();
+let usersName = []
 onMounted(() => {
     
     onAuthStateChanged(auth, (user) => {
         if (user) {
             isLoggedIn.value = true;
+            let names  = user.displayName
+            usersName.value = names
+            // console.log(usersName)
+            return usersName
+            
+            
         }
         else{
             isLoggedIn.value = false;
@@ -107,6 +114,9 @@ const overlay2 = ref(true)
                         <i class="fa-solid fa-book text-green-800"></i>
                         <div class="font-semibold">Dashboard</div>
                     </router-link>
+                    <div class="bg-green-300 flex items-center px-2 rounded-full font-extrabold text-[9px] lg:text-[16px]">
+                        {{ usersName.value }}
+                    </div>
                     <button @click="handleSignOut" v-if="isLoggedIn" class="bg-yellow-400 px-3 rounded-xl flex gap-2 justify-center items-center">
                         <i class="fa-solid fa-right-from-bracket text-base"></i>
                         <div class="text-base">Logout</div>
