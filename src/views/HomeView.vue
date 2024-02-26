@@ -1,6 +1,8 @@
 <script setup>
 import headerButtons from '../components/header1.vue'
-import foot from '@/components/Footer.vue';
+import foot from '@/components/Footer.vue'
+//import { directive as motion } from '@vueuse/motion'
+
 </script>
 
 <template>
