@@ -57,7 +57,7 @@ const overlay2 = ref(true)
 </script>
 <template>
     
-    <main class="flex flex-col  gap-4 sm:px-[12px] 2xl:px-[16px] pb-10">        
+    <main class="flex flex-col  gap-4 sm:px-[12px] 2xl:px-[16px] pb-10 ">        
         <mainhead />
         <section class="flex flex-col lg:flex-row justify-between gap-3 sm:gap-8 px-3 sm:px-5 xl:px-14 ">
             <div class="flex flex-col  sm:w-full lg:w-[35%] gap-3 sm:gap-6">
@@ -87,10 +87,6 @@ const overlay2 = ref(true)
                 </form>
               </div>
               
-              
-
-              <!-- test end -->
-                <!-- <div class="text-white text-[24px]  cathead flex justify-left items-center">Categories</div> -->
                 <Suspense v-if="overlay">
                 <template #default>
                     <categories /> 
@@ -114,7 +110,7 @@ const overlay2 = ref(true)
                         <i class="fa-solid fa-book text-green-800"></i>
                         <div class="font-semibold">Dashboard</div>
                     </router-link>
-                    <div class="bg-green-300 flex items-center px-2 rounded-full font-extrabold text-[9px] lg:text-[16px]">
+                    <div class="bg-green-300 flex items-center px-2 rounded-full font-extrabold text-[9px] lg:text-[16px] text-center">
                         {{ usersName.value }}
                     </div>
                     <button @click="handleSignOut" v-if="isLoggedIn" class="bg-yellow-400 px-3 rounded-xl flex gap-2 justify-center items-center">
